@@ -34,9 +34,9 @@ if $download http://ftp.gnu.org/gnu/coreutils/coreutils-$version.tar.xz; then
 	time if tar -xf coreutils-$version.tar.xz; then
 		set +x
 		cd coreutils-$version
+		patch=$(\ls ../advcpmv-* | grep $version)
+		\patch -p1 -i $patch
 #		mv GNUmakefile GNUmakefile.BACKUP
-		patch=$(\ls advcpmv-* | grep $version)
-		\patch -p1 -i ../$patch
 		test -s Makefile || time ./configure --prefix=$prefix --exec-prefix=$prefix
 		if [ $? = 0 ]; then
 			time if $make; then
